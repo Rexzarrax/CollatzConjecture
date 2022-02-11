@@ -28,6 +28,20 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	}
+	var newValue int = value
+	for {
+		if newValue != 1 {
+			if newValue%2 == 0 {
+				newValue = isEven(newValue)
+			} else {
+				newValue = isOdd(newValue)
+			}
+			fmt.Println(newValue)
+			values = append(values, newValue)
+		} else {
+			break
+		}
+	}
 	printGraph(value, values, numberCLIArg)
 
 }
@@ -45,21 +59,6 @@ func isEven(number int) int {
 }
 
 func printGraph(value int, values []int, numberCLIArg string) {
-
-	var newValue int = value
-	for {
-		if newValue != 1 {
-			if newValue%2 == 0 {
-				newValue = isEven(newValue)
-			} else {
-				newValue = isOdd(newValue)
-			}
-			fmt.Println(newValue)
-			values = append(values, newValue)
-		} else {
-			break
-		}
-	}
 	graph := plot.New()
 	title := "Collatz Conjecture - " + numberCLIArg
 	graph.Title.Text = title
