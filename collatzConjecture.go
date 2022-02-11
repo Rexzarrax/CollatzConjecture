@@ -19,15 +19,33 @@ func main() {
 	values := []int{}
 
 	flag.Parse()
-	s := flag.Arg(0)
+	numberCLIArg := flag.Arg(0)
 	var value int
+	fmt.Println(value)
 
-	_, err := fmt.Sscan(s, &value)
+	_, err := fmt.Sscan(numberCLIArg, &value)
 
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println(value)
+	printGraph(value, values, numberCLIArg)
+
+}
+
+func isOdd(number int) int {
+	calcresult := 3*number + 1
+
+	return calcresult
+}
+
+func isEven(number int) int {
+	calcresult := number / 2
+
+	return calcresult
+}
+
+func printGraph(value int, values []int, numberCLIArg string) {
+
 	var newValue int = value
 	for {
 		if newValue != 1 {
@@ -43,7 +61,7 @@ func main() {
 		}
 	}
 	graph := plot.New()
-	title := "Collatz Conjecture - " + s
+	title := "Collatz Conjecture - " + numberCLIArg
 	graph.Title.Text = title
 	graph.X.Label.Text = "X"
 	graph.Y.Label.Text = "Y"
@@ -56,25 +74,12 @@ func main() {
 	}
 	fmt.Println(coords)
 
-	err = plotutil.AddLinePoints(graph, "", coords)
+	err := plotutil.AddLinePoints(graph, "", coords)
 	if err != nil {
 		panic(err)
 	}
-
 	//save as PNG
 	if err := graph.Save(8*vg.Inch, 4*vg.Inch, title+".png"); err != nil {
 		panic(err)
 	}
-}
-
-func isOdd(number int) int {
-	calcresult := 3*number + 1
-
-	return calcresult
-}
-
-func isEven(number int) int {
-	calcresult := number / 2
-
-	return calcresult
 }
