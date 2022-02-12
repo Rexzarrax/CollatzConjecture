@@ -16,8 +16,6 @@ var PROJECTNAME = "collatzConjecture"
 func main() {
 	fmt.Printf("%s %s ", PROJECTNAME, VERSION)
 
-	values := []int{}
-
 	flag.Parse()
 	numberCLIArg := flag.Arg(0)
 	var value int
@@ -29,6 +27,14 @@ func main() {
 		fmt.Println(err)
 	}
 	var newValue int = value
+	values := buildArray(newValue)
+	printGraph(value, values, numberCLIArg)
+
+}
+
+func buildArray(newValue int) []int {
+	values := []int{}
+	values = append(values, newValue)
 	for {
 		if newValue != 1 {
 			if newValue%2 == 0 {
@@ -42,8 +48,7 @@ func main() {
 			break
 		}
 	}
-	printGraph(value, values, numberCLIArg)
-
+	return values
 }
 
 func isOdd(number int) int {
